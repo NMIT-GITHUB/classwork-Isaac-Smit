@@ -7,6 +7,7 @@ const app = express()
  
 const entries = []
 app.locals.entries = entries
+let entryId = 1
  
 app.set("views", path.resolve(__dirname, "views"))
 app.set("view engine", "ejs")
@@ -26,11 +27,13 @@ app.post("/new-entry", (req,res) => {
         res.status(400).send("Entries must have a title and an information body. Please enter your details")
         return
     }
-    entries.push({
+    const newEntry = {
+        id: entryId++,
         title: req.body,
         body: req.body.body,
         published: new Date()
-    });
+    };
+    entries.push(newEntry)
     res.redirect("/")
 })
 
@@ -54,8 +57,9 @@ app.post("/edit-entry/:id", (req,res) =>{
     if(!req.body.title || !req.body) {
         res.status(400),send("Both title and text are required!")
     }
-    entry.title = req.body.title
-    entry.body = req.body.body
+
+    entry.title = req.body.title,
+    entry.body = req.body.body,
     entries.publish = new Date()
     res.redirect("/")
 })
