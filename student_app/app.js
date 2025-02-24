@@ -33,3 +33,11 @@ app.post("/new-entry", (req,res) => {
     });
     res.redirect("/")
 })
+
+app.use((req,res) => {
+    res.status(404).render("404")
+})
+
+http.createServer(app).listen(3000, () => {
+    console.log("Student Example app started.")
+})
